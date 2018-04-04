@@ -1,0 +1,61 @@
+/* #ca7ca2 wild orchid (pink)
+#bf7ccc lavender
+#767fcc dark pastel blue
+#862ef2 blue violet*
+#9682cc dark pastel purple
+#72ca91 iguana green */
+
+nav {
+    text-align: center;
+}
+
+button {
+    color: #72ca91;
+    background-color: #767fcc;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid #72ca91;
+}
+
+footer {
+    visibility: hidden;
+}
+
+#register-form input, #login-form input {
+    margin: 5px auto;
+    display: block;
+}
+
+#register-form label {
+    /* margin: 20px; */
+}
+
+#add-form input {
+    width: 80px;
+    margin: 5px auto;
+}
+
+#portfolio-table {
+    border: 5px solid #9682cc;
+    margin: 10px auto;
+}
+
+th, td {
+    padding: 7px;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid #9682cc;
+}
+
+th {
+    font-weight: bold;
+    background-color: #ca7ca2;
+}
+
+#detail-table {
+    margin: 10px auto;
+}
+
+#detail-table td {
+    text-align: right;
+}

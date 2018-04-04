@@ -1,0 +1,42 @@
+/* #ca7ca2 wild orchid (pink)
+#bf7ccc lavender
+#767fcc dark pastel blue
+#862ef2 blue violet*
+#9682cc dark pastel purple
+#72ca91 iguana green */
+
+/* Base styles include setting heading sizes, default link styles, default font styles, and body backgrounds. */
+body {
+    color: #862ef2;
+    background-color: #bf7ccc;
+    margin: auto;
+    font-family: 'Fira Sans', Arial, sans-serif;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+a {
+    color: #72ca91;
+}
+
+h1, h2, h3, h4 {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 40px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 35px;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+h4 {
+    font-size: 25px
+}
