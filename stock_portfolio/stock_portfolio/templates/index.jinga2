@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stock Portfolio Home Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="../static/normalize.css">
+  <link rel="stylesheet" href="../static/base.css">
+  <link rel="stylesheet" href="../static/layout.css">
+  <link rel="stylesheet" href="../static/modules.css">
+</head>
+<body>
+  <nav>
+    <a href="index.jinga2">Home</a>
+    <a href="register.jinga2">Register</a>
+    <a href="login.jinga2">Login</a>
+    <a href="portfolio.jinga2">Portfolio</a>
+    <a href="stock-add.jinga2">Add Stock</a>
+    <a href="stock-detail.jinga2">Detail</a>
+  </nav>
+
+  <h1>Stock Portfolio</h1>
+  <p>This is a stock portfolio. Please make an account and login to view your portfolio</p>
+
+  <a href="register.jinga2"><button>Register</button></a>
+  <a href="login.jinga2"><button>Login</button></a>
+
+  <footer>
+      <p>&copy; 2018 Thanks for visiting!</p>
+  </footer>
+</body>
+</html>
