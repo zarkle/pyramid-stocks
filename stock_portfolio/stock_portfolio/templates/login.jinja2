@@ -1,36 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Stock Portfolio Login Page</title>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="../static/normalize.css">
-<link rel="stylesheet" href="../static/base.css">
-  <link rel="stylesheet" href="../static/layout.css">
-  <link rel="stylesheet" href="../static/modules.css">
-</head>
-<body>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/register">Register</a>
-    <a href="/auth">Login</a>
-    <a href="/portfolio">Portfolio</a>
-    <a href="/stock">Add Stock</a>
-    <a href="/portfolio/{}">Detail</a>
-  </nav>  </nav>
+{% extends "base.jinja2" %}
 
-  <h1>Login</h1>
-  <p>Please login to view your stock portfolio and makes changes</p>
+{% block content %}
+<h1>Register</h1>
+<p>Please create a new username and password</p>
 
-  <form id="login-form">
-    <label for="username">Username</label>
-    <input type="text" name="username">
+<form id="registration-form" method="POST" action="{{request.route_url('auth')}}">
+  <label for="username">Username</label>
+  <input type="text" name="username">
 
-    <label for="password">Password</label>
-    <input type="password" name="password">
+  <label for="email">Email</label>
+  <input type="email" name="email">
 
-    <button type="submit">Submit</button>
-  </form>
+  <label for="password">Password</label>
+  <input type="password" name="password">
 
-</body>
-</html>
+  <label for="confirm">Confirm Password</label>
+  <input type="password" name="confirm">
+
+  <button type="submit">Register</button>
+</form>
+
+<h1>Login</h1>
+<p>Please login to view your stock portfolio and makes changes</p>
+
+<form id="login-form" method="GET" action="{{request.route_url('auth')}}">
+  <label for="username">Username</label>
+  <input type="text" name="username">
+
+  <label for="password">Password</label>
+  <input type="password" name="password">
+
+  <button type="submit">Login</button>
+</form>
+
+{% endblock content %}

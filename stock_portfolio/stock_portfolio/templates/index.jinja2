@@ -1,25 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Stock Portfolio Home Page</title>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="../static/normalize.css">
-  <link rel="stylesheet" href="../static/base.css">
-  <link rel="stylesheet" href="../static/layout.css">
-  <link rel="stylesheet" href="../static/modules.css">
-</head>
-<body>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/register">Register</a>
-    <a href="/auth">Login</a>
-    <a href="/portfolio">Portfolio</a>
-    <a href="/stock">Add Stock</a>
-    <a href="/portfolio/{}">Detail</a>
-  </nav>
+{% extends "base.jinja2" %}
 
-  <h1>Stock Portfolio</h1>
+{% block content %}
+<h1>Login</h1>
+{% endblock content %}
+
   <p>This is a stock portfolio. Please make an account and login to view your portfolio</p>
 
   <a href="/register"><button>Register</button></a>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stock Portfolio Home Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/normalize.css')}}">
+  <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/base.css')}}">
+  <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/layout.css')}}">
+  <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/modules.css')}}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/auth">Login</a></li>
+        <li><a href="/portfolio">Portfolio</a></li>
+        <li><a href="/stock">Add Stock</a></li>
+        <li><a href="/portfolio/{}">Detail</a></li>
+    </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Stock Portfolio</h1>
+
+    {% block content%}
+    <p>No content</p>
+    {% endblock content%}
+
+  </main>
+</body>
+</html>
