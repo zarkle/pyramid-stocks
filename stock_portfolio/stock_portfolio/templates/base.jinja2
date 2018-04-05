@@ -13,11 +13,10 @@
   <header>
     <nav>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/auth">Login</a></li>
-        <li><a href="/portfolio">Portfolio</a></li>
-        <li><a href="/stock">Add Stock</a></li>
-        <li><a href="/portfolio/{}">Detail</a></li>
+        <li><a href="{{request.route_url('home')}}">Home</a></li>
+        <li><a href="{{request.route_url('auth')}}">Login</a></li>
+        <li><a href="{{request.route_url('portfolio')}}">Portfolio</a></li>
+        <li><a href="{{request.route_url('detail')}}">Detail</a></li>
     </ul>
     </nav>
   </header>

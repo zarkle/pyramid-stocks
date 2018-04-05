@@ -13,20 +13,10 @@
   </tr>
   <tr>
     <td>{{stock.symbol}}</td>
-    <td>91.27</td>
+    <td>{{stock.companyName}}</td>
   </tr>
 
 </table>
 {% endfor %}
-{% comment %} <ul>
-
-    <li>
-      <h3>{{stock.companyName}}</h3>
-      <p>({{stock.exchange}}) {{stock.industry}}</p>
-      <p><a href="{{request.route_url('detail', symbol=stock.symbol)}}">view more</a></p>
-      <!-- href="/detail/<some_id>" -->
-    </li>
-
-  </ul> {% endcomment %}
 
 {% endblock content %}
