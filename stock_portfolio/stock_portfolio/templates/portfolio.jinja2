@@ -2,21 +2,24 @@
 
 {% block content %}
 
-<h1>Stock Portfolio</h1>
-<p>A list of your current stocks</p>
+<p>A list of the stocks in your portfolio</p>
 
-{% for stock in stocks %}
 <table id="portfolio-table">
   <tr>
     <th>Stock Ticker Symbol</td>
-    <th>Price Per Share</td>
+    <th>Price Per Share<br>(Company Name)</td>
+    <th>Industry</td>
+    <th>Website</td>
   </tr>
+  {% for stock in stocks %}
   <tr>
     <td>{{stock.symbol}}</td>
     <td>{{stock.companyName}}</td>
+    <td>{{stock.industry}}</td>
+    <td><a href="{{stock.website}}" target="_blank">{{stock.symbol}}</a></td>
   </tr>
+  {% endfor %}
 
 </table>
-{% endfor %}
 
 {% endblock content %}
