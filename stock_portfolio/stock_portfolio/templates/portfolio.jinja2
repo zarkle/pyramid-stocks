@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<p>A list of the stocks in your portfolio</p>
+<p>A list of the stocks in your portfolio. Click on symbol for more details</p>
 
 <table id="portfolio-table">
   <tr>
@@ -13,7 +13,7 @@
   </tr>
   {% for stock in stocks %}
   <tr>
-    <td>{{stock.symbol}}</td>
+    <td><a href="{{request.route_url('detail', symbol=stock.symbol)}}">{{stock.symbol}}</a></td>
     <td>{{stock.companyName}}</td>
     <td>{{stock.industry}}</td>
     <td><a href="{{stock.website}}" target="_blank">{{stock.symbol}}</a></td>

@@ -3,26 +3,26 @@
 {% block content %}
 <h1>Stock Detail</h1>
 <table id="detail-table">
-  <h3>MSFT</h3>
+  <h3>{{stock.symbol}}</h3>
   <tr>
     <th>Price</th>
-    <td>93.4</td>
+    <td>{{stock.companyName}}</td>
   </tr>
   <tr>
     <th>Change</td>
-    <td>89.9</td>
+    <td>{{stock.exchange}}</td>
   </tr>
   <tr>
     <th>Opening Price</th>
-    <td>90.8</td>
+    <td>{{stock.industry}}</td>
   </tr>
   <tr>
     <th>Closing Price</th>
-    <td>91.27</td>
+    <td>{{stock.sector}}</td>
   </tr>
   <tr>
     <th>Volume</th>
-    <td>45,867,548</td>
+    <td>{{stock.website}}</td>
   </tr>
 </table>
 

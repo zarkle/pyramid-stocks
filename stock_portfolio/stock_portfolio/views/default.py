@@ -38,10 +38,18 @@ def get_portfolio_view(request):
     }
 
 
-@view_config(route_name='detail', renderer='../templates/stock-detail.jinja2', request_method='GET')
+@view_config(route_name='detail', renderer='../templates/stock-detail.jinja2')
 def get_detail_view(request):
-    return {}
+    try:
+        symbol = request.matchdict['symbol']
+    except KeyError:
+        return HTTPNotFound()
 
+    for stock in MOCK_DATA:
+        if stock['symbol'] == symbol:
+            return {'stock': stock}
+
+    return HTTPNotFound
 
 # @view_config(route_name='add', renderer='../templates/stock-add.jinja2')
 # def add_view(request):
