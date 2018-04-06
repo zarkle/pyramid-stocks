@@ -4,12 +4,21 @@
 <h1>Search</h1>
 <p>Please search for ticker symbol to add to the stock to your portfolio</p>
 
-<form id="add-form" method="PUT" action="{{}}">
+<form id="add-form" method="GET" action="{{request.route_url('stock')}}">
   <label for="ticker">Stock Ticker</label>
-  <input type="text" name="ticker">
+  <input type="text" name="ticker" placeholder="MSFT" required>
   <button type="submit">Search</button>
 
-  <button type="submit">Add to Portfolio</button>
 </form>
+
+{% if company %}
+<div>
+  {{company}}
+</div>
+
+<!-- <form method="PUT" action="{{request.route_url('portfolio')}}">
+<button type="submit">Add to Portfolio</button>
+</form> -->
+{% endif%}
 
 {% endblock content %}
