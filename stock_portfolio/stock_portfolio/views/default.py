@@ -8,16 +8,13 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 API_URL = 'https://api.iextrading.com/1.0'
 
 
-@view_config(route_name='home', renderer='../templates/base.jinja2', request_method='GET')
+@view_config(route_name='home', renderer='../templates/index.jinja2', request_method='GET')
 def home_view(request):
     """home view"""
     return {}
 
 
-@view_config(
-    route_name='portfolio',
-    renderer='../templates/portfolio.jinja2',
-    request_method='GET')
+@view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2')
 def portfolio_view(request):
     """portfolio view"""
     return {'stocks': MOCK_DATA}
