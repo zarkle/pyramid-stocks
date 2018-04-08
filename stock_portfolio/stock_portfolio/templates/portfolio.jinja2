@@ -1,36 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Stock Portfolio Page</title>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="../static/normalize.css">
-  <link rel="stylesheet" href="../static/base.css">
-  <link rel="stylesheet" href="../static/layout.css">
-  <link rel="stylesheet" href="../static/modules.css">
-</head>
-<body>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/register">Register</a>
-    <a href="/auth">Login</a>
-    <a href="/portfolio">Portfolio</a>
-    <a href="/stock">Add Stock</a>
-    <a href="/portfolio/{}">Detail</a>
-  </nav>
-  <h1>Stock Portfolio</h1>
-  <p>A list of your current stocks</p>
+{% extends "base.jinja2" %}
 
-  <table id="portfolio-table">
-    <tr>
-      <th>Stock Ticker Symbol</td>
-      <th>Price Per Share</td>
-    </tr>
-    <tr>
-      <td>MSFT</td>
-      <td>91.27</td>
-    </tr>
+{% block content %}
 
-  </table>
+<p>A list of the stocks in your portfolio. Click on symbol for more details</p>
 
-  </body></html>
+<table id="portfolio-table">
+  <tr>
+    <th>Stock Ticker Symbol</td>
+    <th>Price Per Share<br>(Company Name)</td>
+    <th>Industry</td>
+    <th>Website</td>
+  </tr>
+  {% for stock in stocks %}
+  <tr>
+    <td><a href="{{request.route_url('detail', symbol=stock.symbol)}}">{{stock.symbol}}</a></td>
+    <td>{{stock.companyName}}</td>
+    <td>{{stock.industry}}</td>
+    <td><a href="{{stock.website}}" target="_blank">{{stock.symbol}}</a></td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+{% endblock content %}
