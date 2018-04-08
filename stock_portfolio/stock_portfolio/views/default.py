@@ -60,21 +60,21 @@ def auth_view(request):
     return HTTPNotFound()  # would only hit this if try to do a PUT or DELETE
 
 
-# @view_config(route_name='stock', renderer='../templates/stock-add.jinja2')
-# def add_view(request):
-#     """add stock view"""
-#     if request.method == 'GET':
-#         try:
-#             ticker = request.GET['ticker']
-#             response = requests.get(API_URL + '/stock/{}/company'.format(ticker))
-#             data = response.json()
+@view_config(route_name='stock', renderer='../templates/stock-add.jinja2')
+def add_view(request):
+    """add stock view"""
+    if request.method == 'GET':
+        try:
+            ticker = request.GET['ticker']
+            response = requests.get(API_URL + '/stock/{}/company'.format(ticker))
+            data = response.json()
 
-#             return {'company': data}
+            return {'company': data}
 
 
-#         except KeyError:
-#             return {}
+        except KeyError:
+            return {}
 
-#     else:
-#         raise
+    else:
+        raise
 
