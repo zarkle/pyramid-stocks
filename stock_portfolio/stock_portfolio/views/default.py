@@ -1,5 +1,5 @@
 from pyramid.view import view_config
-from pyramid.response import Response
+# from pyramid.response import Response
 import requests
 
 from ..sample_data import MOCK_DATA
@@ -9,12 +9,38 @@ API_URL = 'https://api.iextrading.com/1.0'
 
 
 @view_config(route_name='home', renderer='../templates/base.jinja2', request_method='GET')
-def get_home_view(request):
+def home_view(request):
+    """home view"""
     return {}
+
+
+@view_config(
+    route_name='portfolio',
+    renderer='../templates/portfolio.jinja2',
+    request_method='GET')
+def portfolio_view(request):
+    """portfolio view"""
+    return {'stocks': MOCK_DATA}
+
+
+@view_config(route_name='detail', renderer='../templates/stock-detail.jinja2')
+def detail_view(request):
+    """single stock detail view"""
+    try:
+        symbol = request.matchdict['symbol']
+    except KeyError:
+        return HTTPNotFound()
+
+    for stock in MOCK_DATA:
+        if stock['symbol'] == symbol:
+            return {'stock': stock}
+
+    return HTTPNotFound()
 
 
 @view_config(route_name='auth', renderer='../templates/auth.jinja2')
 def auth_view(request):
+    """sign-in/sign-up view"""
     if request.method == 'GET':
         try:
             username = request.GET['username']
@@ -34,30 +60,12 @@ def auth_view(request):
 
         return HTTPFound(location=request.route_url('portfolio'))
 
-
-@view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2', request_method='GET')
-def get_portfolio_view(request):
-    return {
-        'stocks': MOCK_DATA
-    }
-
-
-@view_config(route_name='detail', renderer='../templates/stock-detail.jinja2')
-def get_detail_view(request):
-    try:
-        symbol = request.matchdict['symbol']
-    except KeyError:
-        return HTTPNotFound()
-
-    for stock in MOCK_DATA:
-        if stock['symbol'] == symbol:
-            return {'stock': stock}
-
-    return HTTPNotFound
+    return HTTPNotFound()  # would only hit this if try to do a PUT or DELETE
 
 
 # @view_config(route_name='stock', renderer='../templates/stock-add.jinja2')
 # def add_view(request):
+#     """add stock view"""
 #     if request.method == 'GET':
 #         try:
 #             ticker = request.GET['ticker']
