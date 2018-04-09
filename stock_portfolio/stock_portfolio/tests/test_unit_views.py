@@ -48,6 +48,14 @@ def test_detail_view_invalid_key(dummy_request):
     assert isinstance(response, HTTPNotFound)
 
 
+def test_default_behavior_of_stock_view_instance(dummy_request):
+    """test stock view instance"""
+    from ..views.default import add_view
+    dummy_request.method = 'GET'
+    response = add_view(dummy_request)
+    assert isinstance(response, dict)
+
+
 # def test_signin_to_auth_view(dummy_request):
 #     """test auth view sign-in"""
 #     from ..views.default import auth_view

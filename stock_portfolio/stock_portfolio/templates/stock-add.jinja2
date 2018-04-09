@@ -2,23 +2,39 @@
 
 {% block content %}
 <h1>Search</h1>
-<p>Please search for ticker symbol to add to the stock to your portfolio</p>
+<p>Please search for a ticker symbol to add new stocks to your portfolio</p>
 
-<form id="add-form" method="GET" action="{{request.route_url('stock')}}">
-  <label for="ticker">Stock Ticker</label>
-  <input type="text" name="ticker" placeholder="MSFT" required>
+<form id="search-form" method="GET" action="{{request.route_url('stock')}}">
+  <label for="symbol">Stock Ticker</label>
+  <input type="text" name="symbol" required>
   <button type="submit">Search</button>
+  <p>(Examples: MSFT, GE, AMZN)</p>
 
 </form>
 
 {% if company %}
 <div>
-  {{company}}
+  <h3>Result:</h3>
+  <p>Symbol: {{company.symbol}}<br>
+  Company Name: {{company.companyName}}<br>
+  Exchange: {{company.exchange}}<br>
+  Industry: {{company.industry}}<br>
+  Website: {{company.website}}<br>
+  Description: {{company.description}}<br>
+  CEO: {{company.CEO}}<br>
+  Issue Type: {{company.issueType}}<br>
+  Sector: {{company.sector}}</p>
 </div>
 
-<!-- <form method="PUT" action="{{request.route_url('portfolio')}}">
-<button type="submit">Add to Portfolio</button>
-</form> -->
+<form id="add-form" method="POST" action="{{request.route_url('stock')}}">
+  <!-- <input type="hidden" name="symbol" value="{{company.symbol}}"> -->
+  <button type="submit" name="symbol" value="{{company.symbol}}">Add to Portfolio</button>
+</form>
+{% endif%}
+
+{% if err %}
+<h3>Result:</h3>
+<p>{{err}}</p>
 {% endif%}
 
 {% endblock content %}
