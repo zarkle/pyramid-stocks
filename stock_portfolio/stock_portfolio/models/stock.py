@@ -8,7 +8,7 @@ from .meta import Base
 
 
 class Stock(Base):
-    __tablename__ = 'stock_app'
+    __tablename__ = 'stock'
     id = Column(Integer, primary_key=True)
     symbol = Column(String(10), nullable=False, unique=True)
     companyName = Column(String, nullable=False)
