@@ -66,15 +66,15 @@ MOCK_DATA = [
     "sector": "Financial Services"
 },
 {
-    "symbol": "BAC",
-    "companyName": "Bank of America Corporation",
+    "symbol": "DIS",
+    "companyName": "The Walt Disney Company",
     "exchange": "New York Stock Exchange",
-    "industry": "Industrial Products",
-    "website": "http://www.bac.com",
-    "description": "Cras lobortis, tellus nec sollicitudin auctor, orci purus fringilla elit, a porttitor est urna sed lacus. Suspendisse ac sagittis sapien. ",
-    "CEO": "John L. Flannery",
+    "industry": "Entertainment",
+    "website": "http://www.disney.com",
+    "description": "Walt Disney Co together with its subsidiaries is a diversified worldwide entertainment company with operations in four business segments: Media Networks, Parks and Resorts, Studio Entertainment, and Consumer Products & Interactive Media.",
+    "CEO": "Robert A. Iger",
     "issueType": "cs",
-    "sector": "Industrials"
+    "sector": "Consumer Cyclical"
 },
 {
     "symbol": "CZR",
