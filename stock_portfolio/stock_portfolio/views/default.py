@@ -37,11 +37,13 @@ def detail_view(request):
     except KeyError:
         return HTTPNotFound()
 
-    for stock in MOCK_DATA:
-        if stock['symbol'] == symbol:
-            return {'stock': stock}
+    try:
+        query = request.dbsession.query(Stock)
+        stock_detail = query.filter(Stock.symbol == symbol).first()
+    except DBAPIError:
+        return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
 
-    return HTTPNotFound()
+    return {'stock': stock_detail}
 
 
 @view_config(route_name='auth', renderer='../templates/auth.jinja2')
