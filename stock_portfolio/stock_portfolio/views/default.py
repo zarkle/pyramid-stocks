@@ -3,8 +3,9 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 import requests
 import json
-from ..sample_data import MOCK_DATA
-
+from ..models import Stock
+from . import DB_ERR_MSG
+from sqlalchemy.exc import DBAPIError
 
 #global constant for base route for API calls to IEX API
 API_URL = 'https://api.iextrading.com/1.0'
@@ -19,7 +20,13 @@ def home_view(request):
 @view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2')
 def portfolio_view(request):
     """portfolio view"""
-    return {'stocks': MOCK_DATA}
+    try:
+        query = request.dbsession.query(Stock)
+        all_stocks = query.all()
+    except DBAPIError:
+        return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
+
+    return {'stocks': all_stocks}
 
 
 @view_config(route_name='detail', renderer='../templates/stock-detail.jinja2')
