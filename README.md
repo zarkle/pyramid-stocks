@@ -1,6 +1,7 @@
 # Stock Portfolio using Pyramid Framework
 
 **Author**: Beverly
+
 **Version**: 0.1.0
 
 ## Overview
@@ -36,4 +37,5 @@ Written in Python using the Pyramid framework, specifically built with the the c
 -->
 | Date | |
 |:--|:--|
-| 4-7-2018 1600 | Static pages using Jinja2 templates working and detail view working. All views tested.
+| 4-8-2018 2000 | Search/add stock view added, queries IEX Trading API |
+| 4-7-2018 1600 | Static pages using Jinja2 templates working and detail view working. All views tested. |
