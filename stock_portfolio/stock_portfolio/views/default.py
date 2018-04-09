@@ -84,6 +84,5 @@ def add_view(request):
         MOCK_DATA.append(response.json())
         return HTTPFound(location=request.route_url('portfolio'))
 
-    else:
-        raise HTTPNotFound()
+    return HTTPNotFound()
 
