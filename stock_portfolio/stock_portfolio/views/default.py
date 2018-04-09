@@ -1,10 +1,12 @@
 from pyramid.view import view_config
 # from pyramid.response import Response
-import requests
-
-from ..sample_data import MOCK_DATA
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+import requests
+import json
+from ..sample_data import MOCK_DATA
 
+
+#global constant for base route for API calls to IEX API
 API_URL = 'https://api.iextrading.com/1.0'
 
 
@@ -65,16 +67,23 @@ def add_view(request):
     """add stock view"""
     if request.method == 'GET':
         try:
-            ticker = request.GET['ticker']
-            response = requests.get(API_URL + '/stock/{}/company'.format(ticker))
-            data = response.json()
-
-            return {'company': data}
-
-
+            symbol = request.GET['symbol']
         except KeyError:
             return {}
 
+        response = requests.get('{}/stock/{}/company'.format(API_URL, symbol))
+        try:
+            data = response.json()
+            return {'company': data}
+        except json.decoder.JSONDecodeError:
+            return {'err': 'Invalid Symbol'}
+
+    if request.method == 'POST':
+        symbol = request.POST['symbol']
+        response = requests.get('{}/stock/{}/company'.format(API_URL, symbol))
+        MOCK_DATA.append(response.json())
+        return HTTPFound(location=request.route_url('portfolio'))
+
     else:
-        raise
+        raise HTTPNotFound()
 
