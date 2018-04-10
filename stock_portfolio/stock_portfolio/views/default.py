@@ -5,7 +5,9 @@ import requests
 import json
 from ..models import Stock
 from . import DB_ERR_MSG
-from sqlalchemy.exc import DBAPIError
+from sqlalchemy.exc import DBAPIError, IntegrityError
+# import sqlalchemy.exc
+# from ..models import dbsession
 
 #global constant for base route for API calls to IEX API
 API_URL = 'https://api.iextrading.com/1.0'
@@ -90,7 +92,17 @@ def add_view(request):
     if request.method == 'POST':
         symbol = request.POST['symbol']
         response = requests.get('{}/stock/{}/company'.format(API_URL, symbol))
-        MOCK_DATA.append(response.json())
+        company = response.json()
+
+        model = Stock(**company)
+        try:
+            request.dbsession.add(model)
+            # request.dbsession.update(model).where(table.symbol=='symbol').value
+        except IntegrityError:
+            # query = request.dbsession.query(Stock)
+            # stock_detail = query.filter(Stock.symbol == symbol).first()
+            pass
+
         return HTTPFound(location=request.route_url('portfolio'))
 
     return HTTPNotFound()
