@@ -63,7 +63,7 @@ def dummy_request(db_session):
 @pytest.fixture
 def add_stock(dummy_request, test_stock):
     """Add a stock to database"""
-    dummy_request.dbsession.add_all(test_stock)
+    dummy_request.dbsession.add(test_stock)
     return test_stock
 
 # {
@@ -76,4 +76,16 @@ def add_stock(dummy_request, test_stock):
 #     "CEO": "Inge G. Thulin",
 #     "issueType": "cs",
 #     "sector": "Industrials"
-# }
+# # }
+
+#     dummy_request.POST = {
+#         "symbol": "DIS",
+#         "companyName": "The Walt Disney Company",
+#         "exchange": "New York Stock Exchange",
+#         "industry": "Entertainment",
+#         "website": "http://www.disney.com",
+#         "description": "Walt Disney Co together with its subsidiaries is a diversified worldwide entertainment company with operations in four business segments: Media Networks, Parks and Resorts, Studio Entertainment, and Consumer Products & Interactive Media.",
+#         "CEO": "Robert A. Iger",
+#         "issueType": "cs",
+#         "sector": "Consumer Cyclical"
+#     }

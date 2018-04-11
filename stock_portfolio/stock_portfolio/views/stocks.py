@@ -64,7 +64,7 @@ def add_view(request):
         model = Stock(**company)
         try:
             request.dbsession.add(model)
-            request.dbsession.flush(model)
+            request.dbsession.flush()
         except IntegrityError:
             return HTTPConflict()
 
