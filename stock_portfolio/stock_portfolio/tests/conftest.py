@@ -6,12 +6,6 @@ from ..models import Stock, Account
 
 
 @pytest.fixture
-def dummy_request():
-    """Create a dummy request"""
-    return testing.DummyRequest(dbsession=dbsession)
-
-
-@pytest.fixture
 def test_stock():
     """Set up a stock"""
     return Stock(
@@ -57,3 +51,10 @@ def db_session(configuration, request):
 
     request.addfinalizer(teardown)
     return session
+
+
+@pytest.fixture
+def dummy_request():
+    """Create a dummy request"""
+    return testing.DummyRequest(dbsession=db_session)
+
