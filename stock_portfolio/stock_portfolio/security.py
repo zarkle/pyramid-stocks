@@ -20,7 +20,7 @@ def includeme(config):
     authz_policy = ACLAuthorizationPolicy()
     authn_policy = AuthTktAuthenticationPolicy(
         secret=auth_secret,
-        hashalg='sha521',
+        hashalg='sha512',
     )
 
     config.set_authentication_policy(authn_policy)
