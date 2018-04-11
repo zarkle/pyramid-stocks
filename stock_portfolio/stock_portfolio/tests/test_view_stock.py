@@ -1,10 +1,3 @@
-def test_default_behavior_of_home_view(dummy_request):
-    """test home view"""
-    from ..views.default import home_view
-    response = home_view(dummy_request)
-    assert isinstance(response, dict)
-    assert response == {}
-
 
 def test_default_behavior_of_portfolio_view_instance(dummy_request):
     """test portfolio view instance"""
@@ -55,12 +48,3 @@ def test_default_behavior_of_stock_view_instance(dummy_request):
     response = add_view(dummy_request)
     assert isinstance(response, dict)
 
-
-# def test_signin_to_auth_view(dummy_request):
-#     """test auth view sign-in"""
-#     from ..views.default import auth_view
-#     from pyramid.httpexceptions import HTTPFound
-#     dummy_request.method = 'GET'
-#     response = auth_view(dummy_request)
-
-#     assert isinstance(response, HTTPFound)
