@@ -2,6 +2,8 @@ from .meta import Base
 from datetime import datetime as dt
 from sqlalchemy.exc import DBAPIError
 from cryptacular import bcrypt
+from sqlalchemy.orm import relationship
+from .association import association_table
 from sqlalchemy import (
     Column,
     Integer,
@@ -16,6 +18,7 @@ manager = bcrypt.BCRYPTPasswordManager()
 class Account(Base):
     __tablename__ = 'account'
     id = Column(Integer, primary_key=True)
+    stock_id = relationship("Stock", secondary=association_table, back_populates="account_id")
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     email = Column(String)
