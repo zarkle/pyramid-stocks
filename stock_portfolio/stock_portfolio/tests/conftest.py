@@ -7,7 +7,7 @@ from ..models import Stock, Account
 
 @pytest.fixture
 def test_stock():
-    """Set up a stock"""
+    """Set up a test stock"""
     return Stock(
         symbol="MU",
         companyName="Micron Technology Inc.",
@@ -59,3 +59,15 @@ def dummy_request():
     """Create a dummy request"""
     return testing.DummyRequest(dbsession=db_session)
 
+
+# {
+#     "symbol": "MMM",
+#     "companyName": "3M Company",
+#     "exchange": "New York Stock Exchange",
+#     "industry": "Industrial Products",
+#     "website": "http://www.3m.com",
+#     "description": "3M Co is a diversified technology company. It manufactures a diverse array of industrial and consumer products. Its business segments are Industrial, Safety and Graphics, Health Care, Electronics and Energy, and Consumer.",
+#     "CEO": "Inge G. Thulin",
+#     "issueType": "cs",
+#     "sector": "Industrials"
+# }
