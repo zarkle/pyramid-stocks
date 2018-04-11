@@ -1,6 +1,6 @@
 from pyramid.view import view_config
 from pyramid.response import Response
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound, HTTPConflict
 import requests
 import json
 from ..models import Stock
@@ -64,11 +64,9 @@ def add_view(request):
         model = Stock(**company)
         try:
             request.dbsession.add(model)
-            # request.dbsession.update(model).where(table.symbol=='symbol').value
+            request.dbsession.flush(model)
         except IntegrityError:
-            # query = request.dbsession.query(Stock)
-            # stock_detail = query.filter(Stock.symbol == symbol).first()
-            pass
+            return HTTPConflict()
 
         return HTTPFound(location=request.route_url('portfolio'))
 

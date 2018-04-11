@@ -46,14 +46,12 @@ def auth_view(request):
             )
 
             headers = remember(request, userid=instance.username)
-            query = request.dbsession.query(Account)
-            is_in_db = query.filter(Account.username == instance.username).one_or_none()
-            if is_in_db is None:
-                request.dbsession.add(instance)
-            else:
-                return HTTPConflict()
 
-            # request.dbsession.flush()
+            try:
+                request.dbsession.add(instance)
+                request.dbsession.flush()
+            except IntegrityError:
+                return HTTPConflict()
 
             return HTTPFound(location=request.route_url('portfolio'), headers=headers)
 
