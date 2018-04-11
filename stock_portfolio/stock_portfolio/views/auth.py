@@ -30,8 +30,6 @@ def auth_view(request):
         else:
             return HTTPUnauthorized()
 
-    # return HTTPFound(location=request.route_url('home'))
-
     if request.method == 'POST':
         try:
             username = request.POST['username']
