@@ -1,5 +1,5 @@
 from pyramid.view import view_config
-# from pyramid.response import Response
+from pyramid.response import Response
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 import requests
 import json
@@ -35,7 +35,7 @@ def detail_view(request):
         query = request.dbsession.query(Stock)
         stock_detail = query.filter(Stock.symbol == symbol).first()
     except DBAPIError:
-        return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
+        return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
     return {'stock': stock_detail}
 
@@ -72,5 +72,5 @@ def add_view(request):
 
         return HTTPFound(location=request.route_url('portfolio'))
 
-    return HTTPNotFound()
+    return HTTPNotFound()  # would only hit this if try to do a PUT or DELETE
 
