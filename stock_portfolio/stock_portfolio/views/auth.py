@@ -3,8 +3,6 @@ from pyramid.httpexceptions import HTTPFound, HTTPBadRequest, HTTPUnauthorized
 from pyramid.security import NO_PERMISSION_REQUIRED, remember, forget
 from pyramid.response import Response
 from sqlalchemy.exc import DBAPIError
-# import requests
-# import json
 from ..models import Account
 from . import DB_ERR_MSG
 
@@ -15,6 +13,8 @@ from . import DB_ERR_MSG
     permission=NO_PERMISSION_REQUIRED)
 def auth_view(request):
     """sign-in/sign-up view"""
+    # import pdb; pdb.set_trace()
+
     if request.method == 'GET':
         try:
             username = request.GET['username']
@@ -30,7 +30,7 @@ def auth_view(request):
         else:
             return HTTPUnauthorized()
 
-    return HTTPFound(location=request.route_url('home'))
+    # return HTTPFound(location=request.route_url('home'))
 
     if request.method == 'POST':
         try:
