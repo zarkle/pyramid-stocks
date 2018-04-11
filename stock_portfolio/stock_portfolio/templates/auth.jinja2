@@ -5,6 +5,7 @@
 <p>Please create a new username and password</p>
 
 <form id="registration-form" method="POST" action="{{request.route_url('auth')}}">
+  <input type="hidden" name="csrf_token" value="{{request.session.get_csrf_token()}}">
   <label for="username">Username</label>
   <input type="text" name="username">
 
@@ -21,6 +22,7 @@
 <p>Please login to view your stock portfolio and makes changes</p>
 
 <form id="login-form" method="GET" action="{{request.route_url('auth')}}">
+  <input type="hidden" name="csrf_token" value="{{request.session.get_csrf_token()}}">
   <label for="username">Username</label>
   <input type="text" name="username">
 
