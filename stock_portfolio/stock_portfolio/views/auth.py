@@ -2,7 +2,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPBadRequest, HTTPUnauthorized
 from pyramid.security import NO_PERMISSION_REQUIRED, remember, forget
 from pyramid.response import Response
-from sqlalchemy.exc import DBAPIError, IntegrityError
+from sqlalchemy.exc import DBAPIError
 # import requests
 # import json
 from ..models import Account
@@ -53,9 +53,14 @@ def auth_view(request):
             return HTTPFound(location=request.route_url('portfolio'), headers=headers)
 
         except DBAPIError:
-            return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
+            return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
     return HTTPFound(location=request.route_url('auth'))
 
 
+@view_config(route_name='logout')
+def logout(request):
+    """logout of account"""
+    headers = forget(request)
+    return HTTPFound(location=request.route_url('home'), headers=headers)
 
