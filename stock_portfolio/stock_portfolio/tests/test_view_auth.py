@@ -21,3 +21,35 @@ def test_signin_to_auth_view(dummy_request, db_session, test_user):
 
 def test_auth_view_sign_up(dummy_request):
     """test auth view sign-up"""
+    from ..views.auth import auth_view
+    from pyramid.httpexceptions import HTTPFound
+
+    dummy_request.method = 'POST'
+    dummy_request.POST = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.com'}
+    response = auth_view(dummy_request)
+    assert isinstance(response, HTTPFound)
+    assert response.status_code == 302
+
+
+def test_auth_view_sign_up_bad_request(dummy_request):
+    """test auth view sign-up without username"""
+    from ..views.auth import auth_view
+    from pyramid.httpexceptions import HTTPBadRequest
+
+    dummy_request.method = 'POST'
+    dummy_request.POST = {'password': 'bar', 'email': 'foo@bar.com'}
+    response = auth_view(dummy_request)
+    assert isinstance(response, HTTPBadRequest)
+    assert response.status_code == 400
+
+
+def test_auth_view_sign_up_wrong_method(dummy_request):
+    """test auth view sign-up without username"""
+    from ..views.auth import auth_view
+    from pyramid.httpexceptions import HTTPFound
+
+    dummy_request.method = 'PUT'
+    response = auth_view(dummy_request)
+    assert isinstance(response, HTTPFound)
+    assert response.status_code == 302
+

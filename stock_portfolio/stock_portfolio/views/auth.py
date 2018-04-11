@@ -13,8 +13,6 @@ from . import DB_ERR_MSG
     permission=NO_PERMISSION_REQUIRED)
 def auth_view(request):
     """sign-in/sign-up view"""
-    # import pdb; pdb.set_trace()
-
     if request.method == 'GET':
         try:
             username = request.GET['username']
