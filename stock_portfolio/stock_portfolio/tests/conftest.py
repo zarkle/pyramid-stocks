@@ -60,6 +60,12 @@ def dummy_request(db_session):
     return testing.DummyRequest(dbsession=db_session)
 
 
+@pytest.fixture
+def add_stock(dummy_request, test_stock):
+    """Add a stock to database"""
+    dummy_request.dbsession.add_all(test_stock)
+    return test_stock
+
 # {
 #     "symbol": "MMM",
 #     "companyName": "3M Company",

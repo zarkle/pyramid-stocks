@@ -7,22 +7,22 @@ def test_default_behavior_of_portfolio_view_instance(dummy_request):
     assert isinstance(response['stocks'], list)
 
 
-def test_default_behavior_of_portfolio_view(dummy_request):
+def test_default_behavior_of_portfolio_view(dummy_request, add_stock):
     """test portfolio view"""
     from ..views.stocks import portfolio_view
 
     response = portfolio_view(dummy_request)
-    assert response['stocks'][0]['symbol'] == 'GE'
+    assert response['stocks'][0]['symbol'] == 'MU'
     assert 'stocks' in response
 
 
-def test_detail_view(dummy_request):
+def test_detail_view(dummy_request, add_stock):
     """test detail view"""
     from ..views.stocks import detail_view
 
-    dummy_request.matchdict['symbol'] = 'GE'
+    dummy_request.matchdict['symbol'] = 'MU'
     response = detail_view(dummy_request)
-    assert response['stock']['symbol'] == 'GE'
+    assert response['stock']['symbol'] == 'MU'
 
 
 def test_detail_view_invalid_symbol(dummy_request):
