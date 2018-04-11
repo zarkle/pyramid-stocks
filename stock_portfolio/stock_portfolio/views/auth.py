@@ -1,35 +1,61 @@
 from pyramid.view import view_config
-# from pyramid.response import Response
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from pyramid.httpexceptions import HTTPFound, HTTPBadRequest, HTTPUnauthorized
+from pyramid.security import NO_PERMISSION_REQUIRED, remember, forget
+from pyramid.response import Response
+from sqlalchemy.exc import DBAPIError, IntegrityError
 # import requests
 # import json
-# from ..models import Stock
-# from . import DB_ERR_MSG
-# from sqlalchemy.exc import DBAPIError, IntegrityError
-# import sqlalchemy.exc
-# from ..models import dbsession
+from ..models import Account
+from . import DB_ERR_MSG
 
 
-@view_config(route_name='auth', renderer='../templates/auth.jinja2')
+@view_config(
+    route_name='auth',
+    renderer='../templates/auth.jinja2',
+    permission=NO_PERMISSION_REQUIRED)
 def auth_view(request):
     """sign-in/sign-up view"""
     if request.method == 'GET':
         try:
             username = request.GET['username']
             password = request.GET['password']
-            print('User: {}, Pass: {}'.format(username, password))
-
-            return HTTPFound(location=request.route_url('portfolio'))
 
         except KeyError:
             return {}
 
+        is_authenticated = Account.check_credentials(request, username, password)
+        if is_authenticated[0]:
+            headers = remember(request, userid=username)
+            return HTTPFound(location=request.route_url('portfolio'), headers=headers)
+        else:
+            return HTTPUnauthorized()
+
+    return HTTPFound(location=request.route_url('home'))
+
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        print('User: {}, Pass: {}, Email: {}'.format(username, password, email))
+        try:
+            username = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
+        except KeyError:
+            return HTTPBadRequest()
 
-        return HTTPFound(location=request.route_url('portfolio'))
+        try:
+            instance = Account(
+                username=username,
+                email=email,
+                password=password,
+            )
 
-    return HTTPNotFound()  # would only hit this if try to do a PUT or DELETE
+            headers = remember(request, userid=instance.username)
+            request.dbsession.add(instance)
+
+            return HTTPFound(location=request.route_url('portfolio'), headers=headers)
+
+        except DBAPIError:
+            return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
+
+    return HTTPFound(location=request.route_url('auth'))
+
+
+
