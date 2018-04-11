@@ -66,6 +66,25 @@ def add_stock(dummy_request, test_stock):
     dummy_request.dbsession.add(test_stock)
     return test_stock
 
+
+@pytest.fixture
+def test_user():
+    """Set up a test user"""
+    return Account(
+        username="me",
+        password="me",
+        email="me@me.com",
+    )
+
+
+@pytest.fixture
+def add_user(dummy_request, test_user):
+    """Add a user to database"""
+    dummy_request.dbsession.add(test_user)
+    return test_user
+
+
+
 # {
 #     "symbol": "MMM",
 #     "companyName": "3M Company",
