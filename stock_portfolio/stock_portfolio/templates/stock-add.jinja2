@@ -27,6 +27,7 @@
 </div>
 
 <form id="add-form" method="POST" action="{{request.route_url('stock')}}">
+  <input type="hidden" name="csrf_token" value="{{request.session.get_csrf_token()}}">
   <!-- <input type="hidden" name="symbol" value="{{company.symbol}}"> -->
   <button type="submit" name="symbol" value="{{company.symbol}}">Add to Portfolio</button>
 </form>
