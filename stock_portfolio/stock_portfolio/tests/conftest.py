@@ -25,11 +25,11 @@ def test_stock():
 def configuration(request):
     """Setup a database for testing purposes"""
     config = testing.setUp(settings={
-        'sqlalchemy.url': 'postgres://localhost:5432/stock_app_test'
-        # 'sqlalchemy.url': os.environ['TEST_DATABASE_URL']
+        # 'sqlalchemy.url': 'postgres://localhost:5432/stock_app_test'
+        'sqlalchemy.url': os.environ['TEST_DATABASE_URL']
     })
-    config.include('stock_porfolio.models')
-    config.include('stock_porfolio.routes')
+    config.include('..models')
+    config.include('..routes')
 
     def teardown():
         testing.tearDown()
@@ -55,7 +55,7 @@ def db_session(configuration, request):
 
 
 @pytest.fixture
-def dummy_request():
+def dummy_request(db_session):
     """Create a dummy request"""
     return testing.DummyRequest(dbsession=db_session)
 
