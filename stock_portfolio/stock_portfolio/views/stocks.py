@@ -17,9 +17,9 @@ def portfolio_view(request):
     try:
         query = request.dbsession.query(Account)
         instance = query.filter(Account.username == request.authenticated_userid).first()
-        # all_stocks = query.all()
     except DBAPIError:
         return DBAPIError(DB_ERR_MSG, content_type='text/plain', status=500)
+
     if instance:
         return {'stocks': instance.stock_id}
     else:
@@ -40,7 +40,8 @@ def detail_view(request):
         for each in stock_detail.account_id:
             if each.username == request.authenticated_userid:
                 return {'stock': stock_detail}
-        return HTTPFound()
+        return HTTPNotFound()
+
     except DBAPIError:
         return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
@@ -64,6 +65,7 @@ def add_view(request):
     if request.method == 'POST':
         if not all([field in request.POST for field in ['symbol', 'companyName']]):
             raise HTTPBadRequest()
+
         query = request.dbsession.query(Account)
         instance = query.filter(Account.username == request.authenticated_userid).first()
 

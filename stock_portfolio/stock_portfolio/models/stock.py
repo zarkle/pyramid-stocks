@@ -13,7 +13,6 @@ from sqlalchemy import (
 class Stock(Base):
     __tablename__ = 'stock'
     id = Column(Integer, primary_key=True)
-    account_id = relationship("Account", secondary=association_table, back_populates="stock_id")
     symbol = Column(String(10), nullable=False, unique=True)
     companyName = Column(String, nullable=False)
     exchange = Column(String)
@@ -23,4 +22,5 @@ class Stock(Base):
     CEO = Column(String)
     issueType = Column(String)
     sector = Column(String)
+    account_id = relationship('Account', secondary=association_table, back_populates='stock_id')
 
