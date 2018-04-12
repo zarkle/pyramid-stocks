@@ -1,24 +1,40 @@
-def test_default_behavior_of_portfolio_view_instance(dummy_request_auth, add_user):
+def test_default_behavior_of_portfolio_view_instance(dummy_request, add_user):
     """test portfolio view instance"""
     from ..views.stocks import portfolio_view
 
-    response = portfolio_view(dummy_request_auth)
+    response = portfolio_view(dummy_request)
     assert isinstance(response, dict)
     assert isinstance(response['stocks'], list)
 
 
-def test_default_behavior_of_portfolio_view(dummy_request, add_stock):
+def test_default_behavior_of_portfolio_view_not_logged_in(dummy_request):
+    """test portfolio view when not logged in"""
+    from pyramid.httpexceptions import HTTPNotFound
+    from ..views.stocks import portfolio_view
+
+    response = portfolio_view(dummy_request)
+    assert isinstance(response, HTTPNotFound)
+
+
+def test_default_behavior_of_portfolio_view(dummy_request, db_session, test_stock, test_user):
     """test portfolio view"""
     from ..views.stocks import portfolio_view
+
+    test_stock.account_id.append(test_user)
+    db_session.add(test_stock)
+    db_session.add(test_user)
     response = portfolio_view(dummy_request)
     assert response['stocks'][0].symbol == 'MU'
     assert 'stocks' in response
 
 
-def test_detail_view(dummy_request, add_stock):
+def test_detail_view(dummy_request, db_session, test_stock, test_user):
     """test detail view"""
     from ..views.stocks import detail_view
 
+    test_stock.account_id.append(test_user)
+    db_session.add(test_stock)
+    db_session.add(test_user)
     dummy_request.matchdict['symbol'] = 'MU'
     response = detail_view(dummy_request)
     assert response['stock'].symbol == 'MU'
@@ -43,11 +59,13 @@ def test_detail_view_not_found(dummy_request):
     assert isinstance(response, HTTPNotFound)
 
 
-def test_detail_view_add(dummy_request, db_session, test_stock):
+def test_detail_view_add(dummy_request, db_session, test_stock, test_user):
     """ test add stock"""
     from ..views.stocks import detail_view
-    db_session.add(test_stock)
 
+    test_stock.account_id.append(test_user)
+    db_session.add(test_stock)
+    db_session.add(test_user)
     dummy_request.matchdict['symbol'] = 'MU'
     response = detail_view(dummy_request)
     assert response['stock'].symbol == 'MU'
@@ -85,10 +103,13 @@ def test_search_stock_invalid_symbol(dummy_request):
     assert len(response) == 1
 
 
-def test_add_stock(dummy_request):
+def test_add_stock(dummy_request, db_session, test_user, test_stock):
     """test add stock to portfolio"""
     from ..views.stocks import add_view
     from pyramid.httpexceptions import HTTPFound
+
+    test_stock.account_id.append(test_user)
+    db_session.add(test_user)
 
     dummy_request.method = 'POST'
     dummy_request.POST['symbol'] = 'DIS'
