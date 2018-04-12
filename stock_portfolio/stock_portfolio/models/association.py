@@ -5,8 +5,6 @@ from sqlalchemy import (
     Integer,
     ForeignKey,
 )
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 
 association_table = Table(
     'association',
