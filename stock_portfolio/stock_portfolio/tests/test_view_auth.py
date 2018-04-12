@@ -77,3 +77,13 @@ def test_auth_view_sign_up_wrong_method(dummy_request):
     assert isinstance(response, HTTPFound)
     assert response.status_code == 302
 
+
+def test_logout(dummy_request):
+    """test auth view sign-in"""
+    from ..views.auth import logout
+    from pyramid.httpexceptions import HTTPFound
+
+    response = logout(dummy_request)
+    assert isinstance(response, HTTPFound)
+
+

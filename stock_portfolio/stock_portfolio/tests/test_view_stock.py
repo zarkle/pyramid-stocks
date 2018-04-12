@@ -183,8 +183,7 @@ def test_add_stock_duplicate(dummy_request, db_session, test_user, test_stock):
     assert len(db_session.query(Stock).all()) == 1
 
 
-
-def test_add_stock_invalid(dummy_request, db_session, test_user):
+def test_add_stock_null_value(dummy_request, db_session, test_user):
     """test add stock to portfolio without symbol"""
     from ..views.stocks import add_view
     from pyramid.httpexceptions import HTTPConflict
@@ -207,6 +206,30 @@ def test_add_stock_invalid(dummy_request, db_session, test_user):
     assert isinstance(response, HTTPConflict)
 
 
+def test_add_stock_invalid(dummy_request, db_session, test_user):
+    """test add stock to portfolio without symbol"""
+    from ..views.stocks import add_view
+    from pyramid.httpexceptions import HTTPBadRequest
+    import pytest
+
+    db_session.add(test_user)
+
+    dummy_request.method = 'POST'
+    dummy_request.POST = {
+        "companyName": "The Walt Disney Company",
+        "exchange": "New York Stock Exchange",
+        "industry": "Entertainment",
+        "website": "http://www.disney.com",
+        "description": "Walt Disney Co together with its subsidiaries is a diversified worldwide entertainment company with operations in four business segments: Media Networks, Parks and Resorts, Studio Entertainment, and Consumer Products & Interactive Media.",
+        "CEO": "Robert A. Iger",
+        "issueType": "cs",
+        "sector": "Consumer Cyclical"
+    }
+    with pytest.raises(HTTPBadRequest):
+        add_view(dummy_request)
+        # assert isinstance(response, HTTPBadRequest)
+
+
 def test_add_stock_wrong_method(dummy_request, test_stock):
     """test add stock to portfolio"""
     from ..views.stocks import add_view
@@ -215,4 +238,28 @@ def test_add_stock_wrong_method(dummy_request, test_stock):
     dummy_request.method = 'PUT'
     response = add_view(dummy_request)
     assert isinstance(response, HTTPNotFound)
+
+
+def test_add_stock_redirect_location(dummy_request, db_session, test_user):
+    """test add stock to portfolio"""
+    from ..views.stocks import add_view
+    from pyramid.httpexceptions import HTTPFound
+
+    db_session.add(test_user)
+
+    dummy_request.method = 'POST'
+    dummy_request.POST = {
+        "symbol": "DIS",
+        "companyName": "The Walt Disney Company",
+        "exchange": "New York Stock Exchange",
+        "industry": "Entertainment",
+        "website": "http://www.disney.com",
+        "description": "Walt Disney Co together with its subsidiaries is a diversified worldwide entertainment company with operations in four business segments: Media Networks, Parks and Resorts, Studio Entertainment, and Consumer Products & Interactive Media.",
+        "CEO": "Robert A. Iger",
+        "issueType": "cs",
+        "sector": "Consumer Cyclical"
+    }
+
+    response = add_view(dummy_request)
+    assert response.location.endswith('portfolio')
 
