@@ -1,3 +1,9 @@
 [run]
 source = stock_portfolio
 omit = stock_portfolio/test*
+    stock_portfolio/scripts/*
+    stock_portfolio/__init__.py
+    stock_portfolio/models/__init__.py
+    stock_portfolio/models/meta.py
+    setup.py
+
