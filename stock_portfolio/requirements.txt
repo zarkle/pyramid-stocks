@@ -43,7 +43,6 @@ repoze.lru==0.7
 requests==2.18.4
 six==1.11.0
 SQLAlchemy==1.2.6
--e git+https://github.com/zarkle/pyramid-stocks.git@9d87b32cc24a12c44c49bc9ad30313a424e877d6#egg=stock_portfolio&subdirectory=stock_portfolio
 transaction==2.2.1
 translationstring==1.3
 urllib3==1.22
