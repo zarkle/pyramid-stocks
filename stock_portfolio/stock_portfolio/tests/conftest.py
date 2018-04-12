@@ -84,6 +84,41 @@ def add_user(dummy_request, test_user):
     return test_user
 
 
+# @pytest.fixture
+# def auth_config(configuration):
+#     configuration.testing_securitypolicy(
+#         userid="me", permissive=True
+#     )
+#     return configuration
+
+
+# @pytest.fixture
+# def db_session_auth(auth_config, request):
+#     """Create a database session for interacting with the test database"""
+#     SessionFactory = auth_config.registry['dbsession_factory']
+#     session = SessionFactory()
+#     engine = session.bind
+#     Base.metadata.create_all(engine)
+
+#     def teardown():
+#         session.transaction.rollback()
+#         Base.metadata.drop_all(engine)
+
+#     request.addfinalizer(teardown)
+#     return session
+
+
+# @pytest.fixture
+# def dummy_request_auth(db_session_auth):
+#     """Create a dummy request"""
+#     return testing.DummyRequest(dbsession=db_session_auth)
+
+
+# @pytest.fixture
+# def add_user_auth(dummy_request_auth, test_user):
+#     """Add a user to database"""
+#     dummy_request_auth.dbsession.add(test_user)
+#     return test_user
 
 # {
 #     "symbol": "MMM",

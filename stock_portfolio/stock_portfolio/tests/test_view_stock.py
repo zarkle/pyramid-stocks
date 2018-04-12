@@ -1,8 +1,8 @@
-def test_default_behavior_of_portfolio_view_instance(dummy_request):
+def test_default_behavior_of_portfolio_view_instance(dummy_request_auth, add_user):
     """test portfolio view instance"""
     from ..views.stocks import portfolio_view
 
-    response = portfolio_view(dummy_request)
+    response = portfolio_view(dummy_request_auth)
     assert isinstance(response, dict)
     assert isinstance(response['stocks'], list)
 
