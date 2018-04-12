@@ -31,6 +31,10 @@ def configuration(request):
     config.include('..models')
     config.include('..routes')
 
+    config.testing_securitypolicy(
+        userid="me", permissive=True
+    )
+
     def teardown():
         testing.tearDown()
 

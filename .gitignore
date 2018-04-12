@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/code,venv,pydev,macos,python,jupyternotebook
+# Created by https://www.gitignore.io/api/code,pydev,macos,linux,python,windows
 
 ### Code ###
 # Visual Studio Code - https://code.visualstudio.com/
@@ -8,13 +8,21 @@
 tsconfig.json
 jsconfig.json
 
-### JupyterNotebook ###
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
+### Linux ###
+*~
 
-# Remove previous ipynb_checkpoints
-#   git rm -r .ipynb_checkpoints/
-#
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
 ### macOS ###
 *.DS_Store
 .AppleDouble
@@ -112,6 +120,7 @@ docs/_build/
 target/
 
 # Jupyter Notebook
+.ipynb_checkpoints
 
 # pyenv
 .python-version
@@ -144,19 +153,26 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-### venv ###
-# Linux
-bin/
-include/
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
 
-# Window
-Include/
-Lib/
-Scripts/
+# Folder config file
+Desktop.ini
 
-# Shared
-pyvenv.cfg
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
 
 
-
-# End of https://www.gitignore.io/api/code,venv,pydev,macos,python,jupyternotebook
+# End of https://www.gitignore.io/api/code,pydev,macos,linux,python,windows
