@@ -103,28 +103,51 @@ def test_search_stock_invalid_symbol(dummy_request):
     assert len(response) == 1
 
 
-def test_add_stock(dummy_request, db_session, test_user, test_stock):
+def test_add_stock(dummy_request, db_session, test_user):
     """test add stock to portfolio"""
     from ..views.stocks import add_view
     from pyramid.httpexceptions import HTTPFound
 
-    test_stock.account_id.append(test_user)
     db_session.add(test_user)
 
     dummy_request.method = 'POST'
-    dummy_request.POST['symbol'] = 'DIS'
+    dummy_request.POST = {
+        "symbol": "DIS",
+        "companyName": "The Walt Disney Company",
+        "exchange": "New York Stock Exchange",
+        "industry": "Entertainment",
+        "website": "http://www.disney.com",
+        "description": "Walt Disney Co together with its subsidiaries is a diversified worldwide entertainment company with operations in four business segments: Media Networks, Parks and Resorts, Studio Entertainment, and Consumer Products & Interactive Media.",
+        "CEO": "Robert A. Iger",
+        "issueType": "cs",
+        "sector": "Consumer Cyclical"
+    }
+
     response = add_view(dummy_request)
     assert response.status_code == 302
     assert isinstance(response, HTTPFound)
 
 
-def test_add_stock_adds_to_database(dummy_request, db_session):
+def test_add_stock_adds_to_database(dummy_request, db_session, test_user):
     """test add stock to portfolio adds to database"""
     from ..views.stocks import add_view
     from ..models import Stock
 
+    db_session.add(test_user)
+
     dummy_request.method = 'POST'
-    dummy_request.POST['symbol'] = 'DIS'
+    dummy_request.POST = {
+        "symbol": "DIS",
+        "companyName": "The Walt Disney Company",
+        "exchange": "New York Stock Exchange",
+        "industry": "Entertainment",
+        "website": "http://www.disney.com",
+        "description": "Walt Disney Co together with its subsidiaries is a diversified worldwide entertainment company with operations in four business segments: Media Networks, Parks and Resorts, Studio Entertainment, and Consumer Products & Interactive Media.",
+        "CEO": "Robert A. Iger",
+        "issueType": "cs",
+        "sector": "Consumer Cyclical"
+    }
+
     add_view(dummy_request)
     query = db_session.query(Stock)
     first = query.filter(Stock.symbol == 'DIS').first()
@@ -132,14 +155,54 @@ def test_add_stock_adds_to_database(dummy_request, db_session):
     assert first.companyName == 'The Walt Disney Company'
 
 
-def test_add_stock_duplicate(dummy_request, db_session, test_stock):
+def test_add_stock_duplicate(dummy_request, db_session, test_user, test_stock):
     """test try to add stock already in portfolio"""
     from ..views.stocks import add_view
-    from pyramid.httpexceptions import HTTPConflict
+    from pyramid.httpexceptions import HTTPFound
+    from ..models import Stock
+
+    db_session.add(test_user)
     db_session.add(test_stock)
+    assert len(db_session.query(Stock).all()) == 1
 
     dummy_request.method = 'POST'
-    dummy_request.POST['symbol'] = 'MU'
+    dummy_request.POST = {
+        "symbol": "MU",
+        "companyName": "Micron Technology Inc.",
+        "exchange": "Nasdaq Global Select",
+        "industry": "Semiconductors",
+        "website": "http://www.micron.com",
+        "description": "Micron Technology Inc along with its subsidiaries provide memory and storage solutions. Its product portfolio consists of memory and storage technologies such as DRAM, NAND, NOR and 3D XPoint memory.",
+        "CEO": "",
+        "issueType": "cs",
+        "sector": "Technology"
+    }
+
+    response = add_view(dummy_request)
+    assert isinstance(response, HTTPFound)
+    assert len(db_session.query(Stock).all()) == 1
+
+
+
+def test_add_stock_invalid(dummy_request, db_session, test_user):
+    """test add stock to portfolio without symbol"""
+    from ..views.stocks import add_view
+    from pyramid.httpexceptions import HTTPConflict
+
+    db_session.add(test_user)
+
+    dummy_request.method = 'POST'
+    dummy_request.POST = {
+        "symbol": None,
+        "companyName": "The Walt Disney Company",
+        "exchange": "New York Stock Exchange",
+        "industry": "Entertainment",
+        "website": "http://www.disney.com",
+        "description": "Walt Disney Co together with its subsidiaries is a diversified worldwide entertainment company with operations in four business segments: Media Networks, Parks and Resorts, Studio Entertainment, and Consumer Products & Interactive Media.",
+        "CEO": "Robert A. Iger",
+        "issueType": "cs",
+        "sector": "Consumer Cyclical"
+    }
     response = add_view(dummy_request)
     assert isinstance(response, HTTPConflict)
 
