@@ -6,7 +6,6 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
-    ForeignKey,
 )
 
 
