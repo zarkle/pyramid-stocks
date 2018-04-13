@@ -4,6 +4,8 @@
 
 **Version**: 1.0.0
 
+![](https://travis-ci.org/zarkle/pyramid-stocks.svg?branch=master)
+
 ## Overview
 Stock Portfolio App created with Pyramid for CF Python 401 course. Deployed at [Stock App](https://stock-portfolio-app.herokuapp.com/)
 
