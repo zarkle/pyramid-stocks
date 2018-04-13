@@ -2,10 +2,12 @@
 
 **Author**: Beverly
 
-**Version**: 0.1.0
+**Version**: 1.0.0
+
+![](https://travis-ci.org/zarkle/pyramid-stocks.svg?branch=master)
 
 ## Overview
-Stock Portfolio App created with Pyramid for CF Python 401 course
+Stock Portfolio App created with Pyramid for CF Python 401 course. Deployed at [Stock App](https://stock-portfolio-app.herokuapp.com/)
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
@@ -13,6 +15,7 @@ Stock Portfolio App created with Pyramid for CF Python 401 course
 - Go into the repository directory.
 - Start your virtual environment.
 - Install the dependencies using the command `pip install -e .[testing]`
+- Make a database in Postgres and initialize it using the command `initialize_stock_portfolio_db development.ini`
 - Start the server using the command `pserve development.ini --reload`
 - Point your browser to [http://localhost:6543](http://localhost:6543) to view the application
 
@@ -37,5 +40,9 @@ Written in Python using the Pyramid framework, specifically built with the the c
 -->
 | Date | |
 |:--|:--|
+| 4-12-2018 2000 | Deployment on Heroku |
+| 4-11-2018 2000 | Junction table added for relationships between users and stocks |
+| 4-10-2018 2000 | Authentication added for user signup/login |
+| 4-9-2018 2000 | Database added for persistence layer |
 | 4-8-2018 2000 | Search/add stock view added, queries IEX Trading API |
 | 4-7-2018 1600 | Static pages using Jinja2 templates working and detail view working. All views tested. |
