@@ -14,6 +14,7 @@ env:
 
 # command to install dependencies
 install:
+  - cd stock_portfolio
   - pip install -e .[testing]
 
 # commands to run tests
