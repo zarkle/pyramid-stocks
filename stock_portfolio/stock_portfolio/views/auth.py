@@ -5,6 +5,7 @@ from pyramid.response import Response
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from ..models import Account
 from . import DB_ERR_MSG
+import re
 
 
 @view_config(
@@ -36,25 +37,31 @@ def auth_view(request):
         except KeyError:
             return HTTPBadRequest()
 
-        try:
-            instance = Account(
-                username=username,
-                email=email,
-                password=password,
-            )
+        # verify email is correct format
+        verify = re.match(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', email)
+        if verify is None:
+            return {'err': 'Invalid Email Syntax'}
 
-            headers = remember(request, userid=instance.username)
-
+        else:
             try:
-                request.dbsession.add(instance)
-                request.dbsession.flush()
-            except IntegrityError:
-                return HTTPConflict()
+                instance = Account(
+                    username=username,
+                    email=email,
+                    password=password,
+                )
 
-            return HTTPFound(location=request.route_url('portfolio'), headers=headers)
+                headers = remember(request, userid=instance.username)
 
-        except DBAPIError:
-            return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+                try:
+                    request.dbsession.add(instance)
+                    request.dbsession.flush()
+                except IntegrityError:
+                    return HTTPConflict()
+
+                return HTTPFound(location=request.route_url('portfolio'), headers=headers)
+
+            except DBAPIError:
+                return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
     return HTTPFound(location=request.route_url('auth'))
 
