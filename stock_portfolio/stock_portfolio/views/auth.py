@@ -5,6 +5,7 @@ from pyramid.response import Response
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from ..models import Account
 from . import DB_ERR_MSG
+import re
 
 
 @view_config(
@@ -35,6 +36,12 @@ def auth_view(request):
             password = request.POST['password']
         except KeyError:
             return HTTPBadRequest()
+
+        # try:
+        verify = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@ [a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
+        if verify is None:
+            return {'err': 'Invalid Email Syntax'}
+            # raise ValueError('Invalid Email Syntax')
 
         try:
             instance = Account(

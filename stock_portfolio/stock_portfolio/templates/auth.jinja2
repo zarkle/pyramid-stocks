@@ -18,6 +18,10 @@
   <button type="submit">Register</button>
 </form>
 
+{% if err %}
+<p>{{err}}</p>
+{% endif%}
+
 <h1>Login</h1>
 <p>Please login to view your stock portfolio and makes changes</p>
 
