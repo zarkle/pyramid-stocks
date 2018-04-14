@@ -7,15 +7,15 @@
 <table id="portfolio-table">
   <tr>
     <th>Stock Ticker Symbol</td>
-    <th>Price Per Share<br>(Company Name)</td>
-    <th>Industry</td>
+    <th>Company Name</td>
+    <th>Exchange</td>
     <th>Website</td>
   </tr>
   {% for stock in stocks %}
   <tr>
     <td><a href="{{request.route_url('detail', symbol=stock.symbol)}}">{{stock.symbol}}</a></td>
     <td>{{stock.companyName}}</td>
-    <td>{{stock.industry}}</td>
+    <td>{{stock.exchange}}</td>
     <td><a href="{{stock.website}}" target="_blank">{{stock.symbol}}</a></td>
   </tr>
   {% endfor %}
