@@ -37,31 +37,31 @@ def auth_view(request):
         except KeyError:
             return HTTPBadRequest()
 
-        # try:
+        # verify email is correct format
         verify = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@ [a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
         if verify is None:
             return {'err': 'Invalid Email Syntax'}
-            # raise ValueError('Invalid Email Syntax')
 
-        try:
-            instance = Account(
-                username=username,
-                email=email,
-                password=password,
-            )
-
-            headers = remember(request, userid=instance.username)
-
+        else:
             try:
-                request.dbsession.add(instance)
-                request.dbsession.flush()
-            except IntegrityError:
-                return HTTPConflict()
+                instance = Account(
+                    username=username,
+                    email=email,
+                    password=password,
+                )
 
-            return HTTPFound(location=request.route_url('portfolio'), headers=headers)
+                headers = remember(request, userid=instance.username)
 
-        except DBAPIError:
-            return Response(DB_ERR_MSG, content_type='text/plain', status=500)
+                try:
+                    request.dbsession.add(instance)
+                    request.dbsession.flush()
+                except IntegrityError:
+                    return HTTPConflict()
+
+                return HTTPFound(location=request.route_url('portfolio'), headers=headers)
+
+            except DBAPIError:
+                return Response(DB_ERR_MSG, content_type='text/plain', status=500)
 
     return HTTPFound(location=request.route_url('auth'))
 
