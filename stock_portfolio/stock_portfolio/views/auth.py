@@ -38,7 +38,7 @@ def auth_view(request):
             return HTTPBadRequest()
 
         # verify email is correct format
-        verify = re.match(r'^[_a-z0-9-]+(\.[_a-z0-9-]+)*@ [a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
+        verify = re.match(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', email)
         if verify is None:
             return {'err': 'Invalid Email Syntax'}
 
